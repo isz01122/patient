@@ -20,5 +20,3 @@ React JS Fundamentals Patient Info
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-`바로가기` [https://isz01122.github.io/patient](https://isz01122.github.io/patient)
