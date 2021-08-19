@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MaterialTable from "material-table";
 import { TableIcons } from "../components/Elements";
 
 const PatientTable = ({ patients, onUpdatePatients, row }) => {
   let tableRef = useRef();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (row.tableId >= 0) {
@@ -17,11 +18,13 @@ const PatientTable = ({ patients, onUpdatePatients, row }) => {
           ))}
         </div>
       ));
+      setIsLoading(false);
     }
   }, [row]);
   return (
     <div className="table-container">
       <MaterialTable
+        isLoading={isLoading}
         tableRef={tableRef}
         title={false}
         icons={TableIcons}
@@ -29,6 +32,7 @@ const PatientTable = ({ patients, onUpdatePatients, row }) => {
         data={patients.data}
         onRowClick={(event, rowData, togglePanel) => {
           onUpdatePatients(togglePanel, rowData);
+          setIsLoading(true);
         }}
         options={{
           showTitle: false,
