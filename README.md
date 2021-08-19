@@ -12,6 +12,14 @@ React JS Fundamentals Patient Info
 - [x] 4. 테이블 컴포넌트 위 파이 그래프 추가
 - [x] 5. 필터에 따라 차트값도 변경 가능
 
+## Preview
+
+<img src="https://user-images.githubusercontent.com/43328761/130058521-d8b9dea9-052d-4484-bb71-846f9e30d0ab.png" width="640" height="480">
+
+<img src="https://user-images.githubusercontent.com/43328761/130058533-d63d8cec-255c-4f9d-8058-e85cc2171d25.png" width="640" height="480">
+
+<img src="https://user-images.githubusercontent.com/43328761/130058536-ea696093-ef1c-4fdf-8d3d-b9ee4b930186.png" width="640" height="480">
+
 ## Try it out
 
 `yarn`
