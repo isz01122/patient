@@ -14,11 +14,11 @@ React JS Fundamentals Patient Info
 
 ## Preview
 
-<img src="https://user-images.githubusercontent.com/43328761/130058521-d8b9dea9-052d-4484-bb71-846f9e30d0ab.png" width="640" height="480">
+<img src="https://user-images.githubusercontent.com/43328761/130079719-e0adabb2-1970-4d78-b40b-283438fe8f0c.png" width="640" height="480">
 
-<img src="https://user-images.githubusercontent.com/43328761/130058533-d63d8cec-255c-4f9d-8058-e85cc2171d25.png" width="640" height="480">
+<img src="https://user-images.githubusercontent.com/43328761/130079735-47e095b3-1b6e-4997-8667-575162083ec8.png" width="640" height="480">
 
-<img src="https://user-images.githubusercontent.com/43328761/130058536-ea696093-ef1c-4fdf-8d3d-b9ee4b930186.png" width="640" height="480">
+<img src="https://user-images.githubusercontent.com/43328761/130079739-02533e29-f503-4255-a0fa-3b5a8377ea53.png" width="640" height="480">
 
 ## Try it out
 
@@ -30,4 +30,5 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 `바로가기` [https://isz01122.github.io/patient](https://isz01122.github.io/patient)
-(gh-pages의 강제 https변환에 따라 https -> http api호출시 시간이 걸릴 수 있으므로 프로젝트 클론 후 실행해보시면 더욱 빠르게 테스트가 가능합니다.)
+
+(gh-pages의 Enforce HTTPS 때문에 https -> http api호출시 시간이 지연됩니다. 프로젝트 클론 후 실행하면 더욱 빠른 테스트가 가능합니다.)
