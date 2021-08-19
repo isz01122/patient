@@ -34,6 +34,7 @@ const MenuProps = {
   }
 };
 const Age = Array.from({ length: 150 }, (value, index) => index + 1);
+const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
 
 function PatientPage() {
   const [isReady, setIsReady] = useState(false);
@@ -124,7 +125,7 @@ function PatientPage() {
   };
 
   const handleApplyChanges = async () => {
-    let url = new URL("http://49.50.167.136:9871/api/patient/list");
+    let url = new URL(`${baseUrl}/api/patient/list`);
     let search_params = url.searchParams;
     let temp = stats;
 
@@ -168,7 +169,7 @@ function PatientPage() {
 
   const handleUpdatePatients = async (toggle, rowData) => {
     let brief = await axios.get(
-      `http://49.50.167.136:9871/api/patient/brief/${rowData.personID}`
+      `${baseUrl}/api/patient/brief/${rowData.personID}`
     );
     brief = brief.data;
 
