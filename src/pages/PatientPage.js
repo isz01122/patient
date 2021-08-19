@@ -50,6 +50,7 @@ function PatientPage() {
   const [stats, setStats] = useState([]);
   const [filteredStats, setFilteredStats] = useState([]);
   const [isReset, setIsReset] = useState(false);
+  const [row, setRow] = useState({});
 
   useEffect(() => {
     getData()
@@ -171,17 +172,7 @@ function PatientPage() {
     );
     brief = brief.data;
 
-    let obj = patients.dataById;
-    obj[rowData.personID] = {
-      ...obj[rowData.personID],
-      brief
-    };
-    setPatients({
-      ...patients,
-      dataById: obj,
-      data: Object.values(obj)
-    });
-    toggle();
+    setRow({ ...brief, tableId: rowData.tableData.id });
   };
 
   const buildForChart = value => {
@@ -436,6 +427,7 @@ function PatientPage() {
           <PatientTable
             patients={patients}
             onUpdatePatients={handleUpdatePatients}
+            row={row}
           />
         </div>
       )}
