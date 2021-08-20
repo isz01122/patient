@@ -45,6 +45,5 @@
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
-  },
-  "homepage": "http://isz01122.github.io/patient"
+  }
 }

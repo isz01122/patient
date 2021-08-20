@@ -29,6 +29,4 @@ React JS Fundamentals Patient Info
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-`바로가기` [https://isz01122.github.io/patient](https://isz01122.github.io/patient)
-
-(gh-pages의 Enforce HTTPS 때문에 https -> http api호출시 시간이 지연됩니다. 프로젝트 클론 후 실행하면 더욱 빠른 테스트가 가능합니다.)
+`바로가기` [http://my-patient-info.s3-website.ap-northeast-2.amazonaws.com](http://my-patient-info.s3-website.ap-northeast-2.amazonaws.com)
