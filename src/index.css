@@ -12,12 +12,8 @@ code {
     monospace;
 }
 
-.main {
-}
-
 .container {
   width: 1200px;
-  height: 100vh;
   margin: auto;
   text-align: left;
   margin-top: 30px;
@@ -27,12 +23,13 @@ code {
 
 .detail {
   padding-left: 64px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #eaffe4;
 }
 
 .text-title {
-  font-size: 2rem !important;
+  font-size: 1.5rem !important;
   font-weight: bold;
   letter-spacing: 0.38px !important;
   color: #1a283e;
@@ -109,10 +106,6 @@ code {
 
 .jc-fe {
   justify-content: flex-end;
-}
-
-.MuiTableCell-root > button {
-  display: none !important;
 }
 
 .chart-container {

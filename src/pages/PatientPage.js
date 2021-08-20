@@ -86,10 +86,15 @@ function PatientPage() {
     }, {});
     let _patients = {};
     _patients.header = [
-      { title: "환자 ID", field: "personID" },
+      {
+        title: "환자 ID",
+        field: "personID",
+        cellStyle: { paddingLeft: "50px" }
+      },
       {
         title: "성별",
         field: "gender",
+        cellStyle: { paddingLeft: "50px" },
         render: patient => {
           return patient.gender === "M" ? "남자" : "여자";
         }
@@ -97,14 +102,15 @@ function PatientPage() {
       {
         title: "생년월일",
         field: "birthDatetime",
-        cellStyle: { width: "20%" }
+        cellStyle: { width: "20%", paddingLeft: "50px" }
       },
-      { title: "나이", field: "age" },
-      { title: "인종", field: "race" },
-      { title: "민족", field: "ethnicity" },
+      { title: "나이", field: "age", cellStyle: { paddingLeft: "50px" } },
+      { title: "인종", field: "race", cellStyle: { paddingLeft: "50px" } },
+      { title: "민족", field: "ethnicity", cellStyle: { paddingLeft: "50px" } },
       {
         title: "사망 여부",
         field: "isDeath",
+        cellStyle: { paddingLeft: "50px" },
         render: patient => {
           return patient.isDeath ? "사망" : "생존";
         }
@@ -173,7 +179,12 @@ function PatientPage() {
       .then(res => {
         brief = res.data;
       })
-      .then(() => setRow({ ...brief, tableId: rowData.tableData.id }));
+      .then(() =>
+        setRow({
+          ...brief,
+          personId: rowData.personID
+        })
+      );
   };
 
   const buildForChart = value => {
@@ -251,6 +262,9 @@ function PatientPage() {
         }
       }
     },
+    animation: {
+      duration: 1000
+    },
     maintainAspectRatio: false
   };
 
@@ -311,7 +325,7 @@ function PatientPage() {
   ];
 
   return (
-    <div className="main">
+    <div>
       {isReady && (
         <div className="container">
           <div className="text-title mb-20">{"환자 정보"}</div>
@@ -433,10 +447,8 @@ function PatientPage() {
         </div>
       )}
       {!isReady && (
-        <div className="main">
-          <div className="loading">
-            <CircularProgress />
-          </div>
+        <div className="loading">
+          <CircularProgress />
         </div>
       )}
     </div>
