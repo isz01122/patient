@@ -10,11 +10,10 @@ import {
   Input,
   CircularProgress
 } from "@material-ui/core";
-import axios from "axios";
 import { Pie } from "react-chartjs-2";
+import Api from "../services/API";
 
-import { getData } from "../services/API";
-
+const API = new Api();
 const INIT_OPTIONS = {
   gender: null,
   age_min: null,
@@ -54,7 +53,7 @@ function PatientPage() {
   const [row, setRow] = useState({});
 
   useEffect(() => {
-    getData()
+    API.getAllData()
       .then(response => {
         const _patients = buildTable(response.patients);
         setPatients(_patients);
@@ -160,20 +159,21 @@ function PatientPage() {
       : setFilteredStats(stats);
 
     url.search = search_params.toString();
-    let new_url = url.toString();
+    let filteredUrl = url.toString();
 
-    let _patients = await axios.get(new_url);
-    _patients = buildTable(_patients.data.patient);
-    setPatients(_patients);
+    API.getPatients(filteredUrl).then(res => {
+      let _patients = buildTable(res.data.patient);
+      setPatients(_patients);
+    });
   };
 
   const handleUpdatePatients = async (toggle, rowData) => {
-    let brief = await axios.get(
-      `${baseUrl}/api/patient/brief/${rowData.personID}`
-    );
-    brief = brief.data;
-
-    setRow({ ...brief, tableId: rowData.tableData.id });
+    let brief = {};
+    API.getPatientBrief(rowData.personID)
+      .then(res => {
+        brief = res.data;
+      })
+      .then(() => setRow({ ...brief, tableId: rowData.tableData.id }));
   };
 
   const buildForChart = value => {

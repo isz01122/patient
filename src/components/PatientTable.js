@@ -21,6 +21,7 @@ const PatientTable = ({ patients, onUpdatePatients, row }) => {
       setIsLoading(false);
     }
   }, [row]);
+
   return (
     <div className="table-container">
       <MaterialTable
