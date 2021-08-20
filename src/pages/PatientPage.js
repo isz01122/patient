@@ -112,7 +112,11 @@ function PatientPage() {
         field: "isDeath",
         cellStyle: { paddingLeft: "50px" },
         render: patient => {
-          return patient.isDeath ? "사망" : "생존";
+          return patient.isDeath ? (
+            <p className="c-red p-zero m-zero">사망</p>
+          ) : (
+            "생존"
+          );
         }
       }
     ];
