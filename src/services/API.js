@@ -1,7 +1,7 @@
 import axios from "axios";
 const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
 
-class Api {
+class API {
   async getAllData() {
     let response = {
       patients: null,
@@ -9,9 +9,6 @@ class Api {
       race: null,
       ethnicity: null
     };
-
-    // NOTE: 깃허브 페이지 배포시 https -> http API 호출할때 아래와 같이 사용
-    // https://cors-anywhere.herokuapp.com/http://111.111.111.111:3000/api/race/list
 
     let patients = await axios(`${baseUrl}/api/patient/list`);
     let gender = await axios(`${baseUrl}/api/gender/list`);
@@ -38,4 +35,5 @@ class Api {
   }
 }
 
-export default Api;
+const instance = new API();
+export default instance;

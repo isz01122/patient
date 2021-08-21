@@ -3,8 +3,8 @@ import MaterialTable from "material-table";
 import { TableIcons } from "../components/Elements";
 
 const PatientTable = ({ patients, onUpdatePatients, row }) => {
-  let tableRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
+  let tableRef = useRef();
 
   useEffect(() => {
     if (row.personId) {

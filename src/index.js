@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import PatientPage from "./pages/PatientPage";
+import App from "./App";
 
-ReactDOM.render(<PatientPage />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

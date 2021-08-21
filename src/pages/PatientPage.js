@@ -11,9 +11,8 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import { Pie } from "react-chartjs-2";
-import Api from "../services/API";
+import API from "../services/API";
 
-const API = new Api();
 const INIT_OPTIONS = {
   gender: null,
   age_min: null,
@@ -35,7 +34,7 @@ const MenuProps = {
 const Age = Array.from({ length: 150 }, (value, index) => index + 1);
 const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
 
-function PatientPage() {
+const PatientPage = () => {
   const [isReady, setIsReady] = useState(false);
   const [patients, setPatients] = useState({});
   const [filterOptions, setFilterOptions] = useState({
@@ -80,10 +79,6 @@ function PatientPage() {
   }, [isReset]);
 
   const buildTable = patients => {
-    let patientsById = patients.list.reduce((obj, patient) => {
-      obj[patient.personID] = patient;
-      return obj;
-    }, {});
     let _patients = {};
     _patients.header = [
       {
@@ -121,8 +116,6 @@ function PatientPage() {
       }
     ];
     _patients.data = patients.list;
-    _patients.dataById = patientsById;
-
     return _patients;
   };
 
@@ -457,6 +450,6 @@ function PatientPage() {
       )}
     </div>
   );
-}
+};
 
 export default PatientPage;
