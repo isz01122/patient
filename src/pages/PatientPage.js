@@ -11,8 +11,10 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import { Pie } from "react-chartjs-2";
-import API from "../services/API";
 
+import API from "../services/API";
+const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
+const Age = Array.from({ length: 150 }, (value, index) => index + 1);
 const INIT_OPTIONS = {
   gender: null,
   age_min: null,
@@ -21,35 +23,31 @@ const INIT_OPTIONS = {
   ethnicity: null,
   isDeath: null
 };
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      maxHeight: 200,
       width: 250
     }
   }
 };
-const Age = Array.from({ length: 150 }, (value, index) => index + 1);
-const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
+const chartBackgroundColor = [
+  "rgba(98, 181, 229, 1)",
+  "rgba(238, 102, 121, 1)",
+  "rgba(255, 198, 0, 1)",
+  "rgba(111, 86, 214, 1)",
+  "rgba(90, 214, 86, 1)"
+];
 
 const PatientPage = () => {
   const [isReady, setIsReady] = useState(false);
   const [patients, setPatients] = useState({});
-  const [filterOptions, setFilterOptions] = useState({
-    gender: null,
-    age_min: null,
-    age_max: null,
-    race: null,
-    ethnicity: null,
-    isDeath: [true, false]
-  });
+  const [filterOptions, setFilterOptions] = useState(INIT_OPTIONS);
   const [selectedOptions, setSelectedOptions] = useState(INIT_OPTIONS);
   const [stats, setStats] = useState([]);
   const [filteredStats, setFilteredStats] = useState([]);
   const [isReset, setIsReset] = useState(false);
-  const [row, setRow] = useState({});
+  const [patientBrief, setPatientBrief] = useState({});
 
   useEffect(() => {
     API.getAllData()
@@ -60,7 +58,8 @@ const PatientPage = () => {
           ...filterOptions,
           gender: response.gender,
           race: response.race,
-          ethnicity: response.ethnicity
+          ethnicity: response.ethnicity,
+          isDeath: [true, false]
         });
         setStats(response.stats);
         setFilteredStats(response.stats);
@@ -129,37 +128,32 @@ const PatientPage = () => {
   const handleApplyChanges = async () => {
     let url = new URL(`${baseUrl}/api/patient/list`);
     let search_params = url.searchParams;
-    let temp = stats;
+    let _stats = stats;
 
-    Object.entries(selectedOptions).filter(option => option[1] !== null)
-      .length > 0
-      ? Object.entries(selectedOptions)
-          .filter(option => option[1] !== null)
-          .map(option => {
-            if (option[0] === "isDeath") {
-              search_params.append("death", option[1]);
-            } else {
-              search_params.append(option[0], option[1]);
-              if (option[0] === "gender") {
-                let _gender = temp.filter(s => s[option[0]] === option[1]);
-                temp = _gender;
-              }
-              if (option[0] === "race") {
-                let _race = temp.filter(s => s[option[0]] === option[1]);
-                temp = _race;
-              }
-              if (option[0] === "ethnicity") {
-                let _ethnicity = temp.filter(s => s[option[0]] === option[1]);
-                temp = _ethnicity;
-              }
-            }
-          })
-          .forEach((a, i) => {
-            if (i === 0) {
-              setFilteredStats(temp);
-            }
-          })
-      : setFilteredStats(stats);
+    let options = Object.entries(selectedOptions).filter(
+      option => option[1] !== null
+    );
+    if (options.length > 0) {
+      options.map(option => {
+        search_params.append(
+          option[0] === "isDeath" ? "death" : option[0],
+          option[0] === "age_min"
+            ? option[1] - 1
+            : option[0] === "age_max"
+            ? option[1] + 1
+            : option[1]
+        );
+        if (
+          option[0] === "gender" ||
+          option[0] === "race" ||
+          option[0] === "ethnicity"
+        ) {
+          let _selectedOption = _stats.filter(s => s[option[0]] === option[1]);
+          _stats = _selectedOption;
+        }
+      });
+    }
+    setFilteredStats(_stats);
 
     url.search = search_params.toString();
     let filteredUrl = url.toString();
@@ -170,21 +164,21 @@ const PatientPage = () => {
     });
   };
 
-  const handleUpdatePatients = async (toggle, rowData) => {
+  const handlePatientPress = async rowData => {
     let brief = {};
     API.getPatientBrief(rowData.personID)
       .then(res => {
         brief = res.data;
       })
       .then(() =>
-        setRow({
+        setPatientBrief({
           ...brief,
           personId: rowData.personID
         })
       );
   };
 
-  const buildForChart = value => {
+  const buildChart = value => {
     if (value === "gender") {
       let chart = {
         labels: [],
@@ -267,54 +261,40 @@ const PatientPage = () => {
 
   const data = [
     {
-      labels: buildForChart("gender").labels,
+      labels: buildChart("gender").labels,
       datasets: [
         {
-          labels: buildForChart("gender").labels,
-          data: buildForChart("gender").data,
+          labels: buildChart("gender").labels,
+          data: buildChart("gender").data,
           borderWidth: 2,
           hoverBorderWidth: 3,
-          backgroundColor: [
-            "rgba(98, 181, 229, 1)",
-            "rgba(238, 102, 121, 1)",
-            "rgba(255, 198, 0, 1)"
-          ],
+          backgroundColor: chartBackgroundColor,
           fill: true
         }
       ]
     },
     {
-      labels: buildForChart("race").labels,
+      labels: buildChart("race").labels,
       datasets: [
         {
-          labels: buildForChart("race").labels,
-          data: buildForChart("race").data,
+          labels: buildChart("race").labels,
+          data: buildChart("race").data,
           borderWidth: 2,
           hoverBorderWidth: 3,
-          backgroundColor: [
-            "rgba(98, 181, 229, 1)",
-            "rgba(238, 102, 121, 1)",
-            "rgba(255, 198, 0, 1)",
-            "rgba(111, 86, 214, 1)",
-            "rgba(90, 214, 86, 1)"
-          ],
+          backgroundColor: chartBackgroundColor,
           fill: true
         }
       ]
     },
     {
-      labels: buildForChart("ethnicity").labels,
+      labels: buildChart("ethnicity").labels,
       datasets: [
         {
-          labels: buildForChart("ethnicity").labels,
-          data: buildForChart("ethnicity").data,
+          labels: buildChart("ethnicity").labels,
+          data: buildChart("ethnicity").data,
           borderWidth: 2,
           hoverBorderWidth: 3,
-          backgroundColor: [
-            "rgba(98, 181, 229, 1)",
-            "rgba(238, 102, 121, 1)",
-            "rgba(255, 198, 0, 1)"
-          ],
+          backgroundColor: chartBackgroundColor,
           fill: true
         }
       ]
@@ -438,8 +418,8 @@ const PatientPage = () => {
           </FormGroup>
           <PatientTable
             patients={patients}
-            onUpdatePatients={handleUpdatePatients}
-            row={row}
+            onPatientPress={handlePatientPress}
+            patientBrief={patientBrief}
           />
         </div>
       )}

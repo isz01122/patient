@@ -2,24 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import MaterialTable from "material-table";
 import { TableIcons } from "../components/Elements";
 
-const PatientTable = ({ patients, onUpdatePatients, row }) => {
+const PatientTable = ({ patients, onPatientPress, patientBrief }) => {
   const [isLoading, setIsLoading] = useState(false);
   let tableRef = useRef();
 
   useEffect(() => {
-    if (row.personId) {
-      let index = tableRef.current.dataManager.sortedData.findIndex(
-        element => element.personID === row.personId
+    if (patientBrief.personId) {
+      const index = tableRef.current.dataManager.sortedData.findIndex(
+        element => element.personID === patientBrief.personId
       );
       tableRef.current.onToggleDetailPanel([index], rowData => (
         <div className="detail text-sub-title">
-          <div className="text-title">{`전체 방문 수 : ${row.visitCount}회`}</div>
+          <div className="text-title">{`전체 방문 수 : ${patientBrief.visitCount}회`}</div>
           <br />
           <div className="text-title">{"진단 정보"}</div>
-          {row.conditionList.length === 0 ? (
+          {patientBrief.conditionList.length === 0 ? (
             <div className="text-sub-title">{`(진단 정보가 없습니다.)`}</div>
           ) : (
-            row.conditionList?.map(c => (
+            patientBrief.conditionList?.map(c => (
               <div className="text-sub-title">{`* ${c}`}</div>
             ))
           )}
@@ -27,19 +27,18 @@ const PatientTable = ({ patients, onUpdatePatients, row }) => {
       ));
       setIsLoading(false);
     }
-  }, [row]);
+  }, [patientBrief]);
 
   return (
     <div className="table-container">
       <MaterialTable
         isLoading={isLoading}
         tableRef={tableRef}
-        title={false}
         icons={TableIcons}
         columns={patients.header}
         data={patients.data}
         onRowClick={(event, rowData, togglePanel) => {
-          onUpdatePatients(togglePanel, rowData);
+          onPatientPress(rowData);
           setIsLoading(true);
         }}
         options={{
