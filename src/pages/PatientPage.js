@@ -13,7 +13,7 @@ import {
 import { Pie } from "react-chartjs-2";
 
 import API from "../services/API";
-const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
+const baseUrl = "http://49.50.167.136:9871";
 const Age = Array.from({ length: 150 }, (value, index) => index + 1);
 const INIT_OPTIONS = {
   gender: null,

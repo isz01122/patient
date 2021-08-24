@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = process.env.REACT_APP_PATIENT_API_BASE_URL;
+const baseUrl = "http://49.50.167.136:9871";
 
 class API {
   async getAllData() {
