@@ -164,6 +164,11 @@ const PatientPage = () => {
     });
   };
 
+  const handleResetPress = () => {
+    setSelectedOptions(INIT_OPTIONS);
+    setIsReset(true);
+  };
+
   const handlePatientPress = async rowData => {
     let brief = {};
     API.getPatientBrief(rowData.personID)
@@ -403,13 +408,7 @@ const PatientPage = () => {
                 ))}
               </Select>
             </FormControl>
-            <Button
-              className="reset-btn mr-20"
-              onClick={() => {
-                setSelectedOptions(INIT_OPTIONS);
-                setIsReset(true);
-              }}
-            >
+            <Button className="reset-btn mr-20" onClick={handleResetPress}>
               초기화
             </Button>
             <Button className="filter-btn" onClick={handleApplyChanges}>
